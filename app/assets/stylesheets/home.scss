@@ -1,0 +1,13 @@
+.card {
+  cursor: pointer;
+  &.bg-success {
+    &:hover {
+      background-color: #1e7e34 !important;
+    }
+  }
+  &.bg-info {
+    &:hover {
+      background-color: #117a8b !important;
+    }
+  }
+}
