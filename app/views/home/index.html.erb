@@ -1,8 +1,11 @@
 <div class="container">
-  <h2>Cards with Contextual Classes</h2>
+  <%= image_tag 'logo.png', class: 'img-responsive', alt: 'logo' %>
+  <br>
   <br>
   <div class="card bg-success text-white">
-    <div class="card-body">Start Game</div>
+    <%= link_to race_start_path do %>
+      <div class="card-body">Start Game</div>
+    <% end %>
   </div>
   <br>
   <div class="card bg-info text-white">
