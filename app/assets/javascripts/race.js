@@ -1,154 +1,154 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 $(function() {
-    var animation_id;
+    var animationId;
 
     //saving dom objects to variables
     var road = $('#road');
     var car = $('#car');
-    var car_1 = $('#car_1');
-    var car_2 = $('#car_2');
-    var car_3 = $('#car_3');
-    var white_line_1 = $('#white_line_1');
-    var white_line_2 = $('#white_line_2');
-    var white_line_3 = $('#white_line_3');
-    var restart_section = $('#restart_section');
-    var restart_btn = $('#restart');
+    var car1 = $('#car_1');
+    var car2 = $('#car_2');
+    var car3 = $('#car_3');
+    var whiteLine1 = $('#white_line_1');
+    var whiteLine2 = $('#white_line_2');
+    var whiteLine3 = $('#white_line_3');
+    var restartSection = $('#restart_section');
+    var restartBtn = $('#restart');
     var score = $('#score');
 
     //saving some initial setup
-    var road_width = parseInt(road.width());
-    var road_height = parseInt(road.height());
-    var car_width = parseInt(car.width());
-    var car_height = parseInt(car.height());
+    var roadWidth = parseInt(road.width());
+    var roadHeight = parseInt(road.height());
+    var carWidth = parseInt(car.width());
+    var carHeight = parseInt(car.height());
 
     //some other declarations
-    var game_over = false;
-    var move_right = false;
-    var move_left = false;
-    var move_up = false;
-    var move_down = false;
-    var score_counter = 1;
+    var gameOver = false;
+    var moveRight = false;
+    var moveLeft = false;
+    var moveUp = false;
+    var moveDown = false;
+    var scoreCounter = 1;
     var speed = 2;
-    var white_line_speed = 5;
+    var whiteLineSpeed = 5;
 
     /* Move the cars */
     $(document).on('keydown', function(e) {
-        if (game_over === false) {
+        if (gameOver === false) {
             var key = e.keyCode;
-            if (key === 37 && move_left === false) {
-                move_left = requestAnimationFrame(left);
-            } else if (key === 39 && move_right === false) {
-                move_right = requestAnimationFrame(right);
-            } else if (key === 38 && move_up === false) {
-                move_up = requestAnimationFrame(up);
-            } else if (key === 40 && move_down === false) {
-                move_down = requestAnimationFrame(down);
+            if (key === 37 && moveLeft === false) {
+                moveLeft = requestAnimationFrame(left);
+            } else if (key === 39 && moveRight === false) {
+                moveRight = requestAnimationFrame(right);
+            } else if (key === 38 && moveUp === false) {
+                moveUp = requestAnimationFrame(up);
+            } else if (key === 40 && moveDown === false) {
+                moveDown = requestAnimationFrame(down);
             }
         }
     });
 
     $(document).on('keyup', function(e) {
-        if (game_over === false) {
+        if (gameOver === false) {
             var key = e.keyCode;
             if (key === 37) {
-                cancelAnimationFrame(move_left);
-                move_left = false;
+                cancelAnimationFrame(moveLeft);
+                moveLeft = false;
             } else if (key === 39) {
-                cancelAnimationFrame(move_right);
-                move_right = false;
+                cancelAnimationFrame(moveRight);
+                moveRight = false;
             } else if (key === 38) {
-                cancelAnimationFrame(move_up);
-                move_up = false;
+                cancelAnimationFrame(moveUp);
+                moveUp = false;
             } else if (key === 40) {
-                cancelAnimationFrame(move_down);
-                move_down = false;
+                cancelAnimationFrame(moveDown);
+                moveDown = false;
             }
         }
     });
 
     function left() {
-        if (game_over === false && parseInt(car.css('left')) > 0) {
+        if (gameOver === false && parseInt(car.css('left')) > 0) {
             car.css('left', parseInt(car.css('left')) - 5);
-            move_left = requestAnimationFrame(left);
+            moveLeft = requestAnimationFrame(left);
         }
     }
 
     function right() {
-        if (game_over === false && parseInt(car.css('left')) < road_width - car_width) {
+        if (gameOver === false && parseInt(car.css('left')) < roadWidth - carWidth) {
             car.css('left', parseInt(car.css('left')) + 5);
-            move_right = requestAnimationFrame(right);
+            moveRight = requestAnimationFrame(right);
         }
     }
 
     function up() {
-        if (game_over === false && parseInt(car.css('top')) > 0) {
+        if (gameOver === false && parseInt(car.css('top')) > 0) {
             car.css('top', parseInt(car.css('top')) - 3);
-            move_up = requestAnimationFrame(up);
+            moveUp = requestAnimationFrame(up);
         }
     }
 
     function down() {
-        if (game_over === false && parseInt(car.css('top')) < road_height - car_height) {
+        if (gameOver === false && parseInt(car.css('top')) < roadHeight - carHeight) {
             car.css('top', parseInt(car.css('top')) + 3);
-            move_down = requestAnimationFrame(down);
+            moveDown = requestAnimationFrame(down);
         }
     }
 
     /* Move the cars and lines */
-    animation_id = requestAnimationFrame(repeat);
+    animationId = requestAnimationFrame(repeat);
 
     function repeat() {
-        if (detectCollision(car, car_1) || detectCollision(car, car_2) || detectCollision(car, car_3)) {
-            gameOver();
+        if (detectCollision(car, car1) || detectCollision(car, car2) || detectCollision(car, car3)) {
+            raceOver();
             return;
         }
-        score_counter++;
+        scoreCounter++;
 
-        if (score_counter % 20 == 0) {
+        if (scoreCounter % 20 == 0) {
             score.text(parseInt(score.text()) + 1);
         }
-        if (score_counter % 500 == 0) {
+        if (scoreCounter % 500 == 0) {
             speed++;
-            white_line_speed++;
+            whiteLineSpeed++;
         }
 
-        car_down(car_1);
-        car_down(car_2);
-        car_down(car_3);
+        moveCar(car1);
+        moveCar(car2);
+        moveCar(car3);
 
-        line_down(white_line_1);
-        line_down(white_line_2);
-        line_down(white_line_3);
+        moveWhiteLine(whiteLine1);
+        moveWhiteLine(whiteLine2);
+        moveWhiteLine(whiteLine3);
 
-        animation_id = requestAnimationFrame(repeat);
+        animationId = requestAnimationFrame(repeat);
     }
 
-    function car_down(car) {
-        var car_current_top = parseInt(car.css('top'));
-        if (car_current_top > road_height) {
-            car_current_top = -200;
-            var car_left = parseInt(Math.random() * (road_width - car_width));
+    function moveCar(car) {
+        var carCurrentTop = parseInt(car.css('top'));
+        if (carCurrentTop > roadHeight) {
+            carCurrentTop = -200;
+            var car_left = parseInt(Math.random() * (roadWidth - carWidth));
             car.css('left', car_left);
         }
-        car.css('top', car_current_top + speed);
+        car.css('top', carCurrentTop + speed);
     }
 
-    function line_down(line) {
-        var line_current_top = parseInt(line.css('top'));
-        if (line_current_top > road_height) {
-            line_current_top = -300;
+    function moveWhiteLine(line) {
+        var lineCurrentTop = parseInt(line.css('top'));
+        if (lineCurrentTop > roadHeight) {
+            lineCurrentTop = -300;
         }
-        line.css('top', line_current_top + white_line_speed);
+        line.css('top', lineCurrentTop + whiteLineSpeed);
     }
 
-    function gameOver() {
-        game_over = true;
-        cancelAnimationFrame(animation_id);
-        cancelAnimationFrame(move_right);
-        cancelAnimationFrame(move_left);
-        cancelAnimationFrame(move_up);
-        cancelAnimationFrame(move_down);
+    function raceOver() {
+        gameOver = true;
+        cancelAnimationFrame(animationId);
+        cancelAnimationFrame(moveRight);
+        cancelAnimationFrame(moveLeft);
+        cancelAnimationFrame(moveUp);
+        cancelAnimationFrame(moveDown);
     }
 
     function detectCollision($div1, $div2) {
