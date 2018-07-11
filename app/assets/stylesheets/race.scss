@@ -1,3 +1,30 @@
 // Place all the styles related to the Race controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#road{
+  position: relative;
+  height: 90vh;
+  width: 25%;
+  left: 35%;
+  margin-top: 20px;;
+  background-color: #292929;
+  overflow: hidden;
+}
+.white_line{
+  position: absolute;
+  height: 150px;
+  width: 4%;
+  margin-left: 48%;
+  background-color: rgba(255,255,255,0.5);
+}
+#white_line_1{
+  top: -150px;
+}
+#white_line_2{
+  top: 150px;
+}
+#white_line_3{
+  top: 450px;
+}
+
