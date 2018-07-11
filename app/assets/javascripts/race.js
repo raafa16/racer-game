@@ -149,6 +149,8 @@ $(function() {
         cancelAnimationFrame(moveLeft);
         cancelAnimationFrame(moveUp);
         cancelAnimationFrame(moveDown);
+        restartSection.slideDown();
+        restartBtn.focus();
     }
 
     function detectCollision($div1, $div2) {
@@ -168,4 +170,8 @@ $(function() {
         if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
         return true;
     }
+
+    restartBtn.click(function() {
+        location.reload();
+    });
 });
