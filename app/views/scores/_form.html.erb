@@ -1,0 +1,28 @@
+<h1>Submit your score and see where you show up on the leader board!</h1>
+
+<%= form_with(model: score, local: true) do |form| %>
+  <% if score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(score.errors.count, "error") %> prohibited this score from being saved:</h2>
+
+      <ul>
+      <% score.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+  <div class="field">
+    <%= form.hidden_field :score_count, value: '1' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
