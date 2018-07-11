@@ -28,6 +28,9 @@ $(function() {
     var move_left = false;
     var move_up = false;
     var move_down = false;
+    var score_counter = 1;
+    var speed = 2;
+    var white_line_speed = 5;
 
     /* Move the cars */
     $(document).on('keydown', function(e) {
@@ -90,5 +93,48 @@ $(function() {
             car.css('top', parseInt(car.css('top')) + 3);
             move_down = requestAnimationFrame(down);
         }
+    }
+
+    /* Move the cars and lines */
+    animation_id = requestAnimationFrame(repeat);
+
+    function repeat() {
+        score_counter++;
+
+        if (score_counter % 20 == 0) {
+            score.text(parseInt(score.text()) + 1);
+        }
+        if (score_counter % 500 == 0) {
+            speed++;
+            white_line_speed++;
+        }
+
+        car_down(car_1);
+        car_down(car_2);
+        car_down(car_3);
+
+        line_down(white_line_1);
+        line_down(white_line_2);
+        line_down(white_line_3);
+
+        animation_id = requestAnimationFrame(repeat);
+    }
+
+    function car_down(car) {
+        var car_current_top = parseInt(car.css('top'));
+        if (car_current_top > road_height) {
+            car_current_top = -200;
+            var car_left = parseInt(Math.random() * (road_width - car_width));
+            car.css('left', car_left);
+        }
+        car.css('top', car_current_top + speed);
+    }
+
+    function line_down(line) {
+        var line_current_top = parseInt(line.css('top'));
+        if (line_current_top > road_height) {
+            line_current_top = -300;
+        }
+        line.css('top', line_current_top + white_line_speed);
     }
 });
