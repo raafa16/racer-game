@@ -1,6 +1,10 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 $(function() {
+
+    $.ajaxSetup({
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))}
+    });
     var animationId;
 
     //saving dom objects to variables
@@ -15,6 +19,7 @@ $(function() {
     var restartSection = $('#restart_section');
     var restartBtn = $('#restart');
     var score = $('#score');
+    var finalScore = $('#final_score');
 
     //saving some initial setup
     var roadWidth = parseInt(road.width());
@@ -100,6 +105,7 @@ $(function() {
 
     function repeat() {
         if (detectCollision(car, car1) || detectCollision(car, car2) || detectCollision(car, car3)) {
+            finalScore.text(parseInt(score.text()));
             raceOver();
             return;
         }
@@ -173,5 +179,29 @@ $(function() {
 
     restartBtn.click(function() {
         location.reload();
+    });
+
+    var submitScoreForm = $('#submit_score');
+
+    submitScoreForm.submit(function(e) {
+      var ScorerName = submitScoreForm.find('input[name="ScorerName"]').val();
+      var finalScoreCount = parseInt(score.text());
+
+      $.ajax({
+        type: submitScoreForm.attr('method'),
+        url: submitScoreForm.attr('action'),
+        dataType: 'json',
+        data: {
+          'score': {
+            'score_count': finalScoreCount,
+            'name': ScorerName
+          }
+        },
+        success: function (data) {
+          window.location = data.location;
+        }
+      });
+      e.preventDefault();
+      return false;
     });
 });

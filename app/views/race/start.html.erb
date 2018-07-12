@@ -49,9 +49,19 @@
     <div class="back_tyre_right"></div>
   </div>
   <div id="restart_section">
-    <button id="restart">
-      Restart Race<br>
-      <small class="small_text">(press Enter)</small>
-    </button>
+    <div class="container">
+      Score: <span id="final_score">0</span>
+      <h2>Submit your score!</h2>
+      <form id="submit_score" action="/scores" method="POST">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your name" name="ScorerName">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Score</button>
+      </form>
+      <button id="restart">
+        Restart Race<br>
+      </button>
+    </div>
   </div>
 </div>
