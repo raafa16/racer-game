@@ -1,5 +1,11 @@
 .card {
   cursor: pointer;
+  a {
+    color: #ffffff;
+    &:hover {
+      text-decoration: none;
+    }
+  }
   &.bg-success {
     &:hover {
       background-color: #1e7e34 !important;
